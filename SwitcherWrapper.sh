@@ -17,33 +17,34 @@
 # See the COPYING file in the main directory for details.
 #
 
-#SCRIPT_PATH Should point to switcher control script  provided by https://github.com/NightRang3r/Switcher-V2-Python
+#SCRIPT_PATH Should point to the full path to switcher control script  provided by https://github.com/NightRang3r/Switcher-V2-Python
 #Remember to change the values in the swticher python script manually (IP Address and device id)
 #TODO - Port the switcher python script to Python 3 for future compatibility with octoprint
-SCRIPT_PATH="./switcher.py"
+SCRIPT_PATH="/home/pi/OctoPrint/SwitcherSmartPlugWrapper/switcher.py"
 
 ACTION=$1
 
 case $ACTION in
     on)
         echo "Turning On..."
-        python ${SCRIPT_PATH} 1
+	    python ${SCRIPT_PATH} 1
         exit $?
         ;;
     off)
         echo "Turning Off..."
-        python ${SCRIPT_PATH} 0
+	    python ${SCRIPT_PATH} 0
         exit $?
         ;;
     sense)
+	echo "Sense" >> /tmp/test.txt
         switch_state=`python ${SCRIPT_PATH} 2 | sed 's/,/\n/g' | grep -a 'Device state is' | awk '{ print $5 } '`
 	
         if [[ $switch_state == 'ON' ]]; then
             echo "On"
-            exit 0
+	        exit 0
         elif [[ $switch_state == 'OFF' ]]; then
             echo "Off"
-            exit 1
+  	        exit 1
         else
             echo "Unknown Error"
             exit 1

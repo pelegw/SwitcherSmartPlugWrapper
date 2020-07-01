@@ -691,8 +691,20 @@ try:
 		data = crcSignFullPacketComKey(data, pKey)
 		if sCommand == "0":
 			print ("[*] Sending OFF Command to Switcher...")
+			s.send(ba.unhexlify(data))
+	                res = s.recv(1024)
+        	        s.close()
+	                print ("[+] Done!")
+			exit(0)
+
 		elif sCommand == "1":
 			print ("[*] Sending ON Command to Switcher...")
+			s.send(ba.unhexlify(data))
+	                res = s.recv(1024)
+	                s.close()
+        	        print ("[+] Done!")
+			exit(1)
+
 
 		s.send(ba.unhexlify(data))
 		res = s.recv(1024)
