@@ -36,8 +36,7 @@ case $ACTION in
         exit $?
         ;;
     sense)
-	echo "Sense" >> /tmp/test.txt
-        switch_state=`python ${SCRIPT_PATH} 2 | sed 's/,/\n/g' | grep -a 'Device state is' | awk '{ print $5 } '`
+	switch_state=`python ${SCRIPT_PATH} 2 | sed 's/,/\n/g' | grep -a 'Device state is' | awk '{ print $5 } '`
 	
         if [[ $switch_state == 'ON' ]]; then
             echo "On"
